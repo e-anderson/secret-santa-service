@@ -1,0 +1,1 @@
+web: java -jar target/secret-santa-service-1.0.0.jar
