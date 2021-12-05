@@ -28,7 +28,7 @@ public class UserController {
         try {
             User user = new User();
             user.setEmail(request.getEmail());
-            user.setAuth0Id(request.getAuth0_id());
+            user.setAuth0Id(request.getAuth0Id());
             userRepository.save(user);
             return true;
         } catch (Exception ex) {

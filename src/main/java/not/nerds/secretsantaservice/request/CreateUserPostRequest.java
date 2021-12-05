@@ -2,7 +2,7 @@ package not.nerds.secretsantaservice.request;
 
 public class CreateUserPostRequest {
     private String email;
-    private String auth0_id;
+    private String auth0Id;
 
     public String getEmail() {
         return email;
@@ -12,11 +12,11 @@ public class CreateUserPostRequest {
         this.email = email;
     }
 
-    public String getAuth0_id() {
-        return auth0_id;
+    public String getAuth0Id() {
+        return auth0Id;
     }
 
-    public void setAuth0_id(String auth0_id) {
-        this.auth0_id = auth0_id;
+    public void setAuth0Id(String auth0Id) {
+        this.auth0Id = auth0Id;
     }
 }
