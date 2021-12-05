@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="user")
+@Table(name="\"user\"")
 public class User {
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="email")
@@ -23,6 +23,12 @@ public class User {
 
     @OneToMany(mappedBy = "host")
     private List<Exchange> exchangesHosted;
+
+    @OneToMany(mappedBy="gifter")
+    private List<Match> matchesAsGifter;
+
+    @OneToMany(mappedBy="recipient")
+    private List<Match> matchesAsRecipient;
 
     public int getId() {
         return id;
@@ -62,5 +68,21 @@ public class User {
 
     public void setExchangesHosted(List<Exchange> exchangesHosted) {
         this.exchangesHosted = exchangesHosted;
+    }
+
+    public List<Match> getMatchesAsGifter() {
+        return matchesAsGifter;
+    }
+
+    public void setMatchesAsGifter(List<Match> matchesAsGifter) {
+        this.matchesAsGifter = matchesAsGifter;
+    }
+
+    public List<Match> getMatchesAsRecipient() {
+        return matchesAsRecipient;
+    }
+
+    public void setMatchesAsRecipient(List<Match> matchesAsRecipient) {
+        this.matchesAsRecipient = matchesAsRecipient;
     }
 }

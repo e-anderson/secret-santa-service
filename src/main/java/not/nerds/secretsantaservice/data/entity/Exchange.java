@@ -9,11 +9,14 @@ import java.util.List;
 public class Exchange {
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="name")
     private String name;
+
+    @Column(name="created_on")
+    private Date createdDate;
 
     @Column(name="start_date")
     private Date startDate;
@@ -22,15 +25,19 @@ public class Exchange {
     private Date endDate;
 
     @ManyToOne
+    @JoinColumn(name="host_id")
     private User host;
 
     @ManyToMany
     @JoinTable(
             name="exchange_has_participant",
-            joinColumns=@JoinColumn(name="participant_id"),
-            inverseJoinColumns = @JoinColumn(name="exchange_id")
+            joinColumns=@JoinColumn(name="exchange_id"),
+            inverseJoinColumns = @JoinColumn(name="participant_id")
     )
     private List<User> participants;
+
+    @OneToMany(mappedBy = "exchange")
+    private List<Match> matches;
 
     public int getId() {
         return id;
@@ -46,6 +53,14 @@ public class Exchange {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getStartDate() {
@@ -78,5 +93,13 @@ public class Exchange {
 
     public void setParticipants(List<User> participants) {
         this.participants = participants;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
     }
 }
