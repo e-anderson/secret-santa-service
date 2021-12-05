@@ -11,18 +11,18 @@ public class ExchangeDto {
     private String name;
     private Date startDate;
     private Date endDate;
-    private UserDto host;
-    private List<UserDto> participants;
+    private ExchangeHostDto host;
+    private List<ExchangeParticipantDto> participants;
 
     public ExchangeDto(Exchange exchange) {
         this.id=exchange.getId();
         this.name= exchange.getName();
         this.startDate = exchange.getStartDate();
         this.endDate = exchange.getEndDate();
-        this.host = new UserDto(exchange.getHost());
+        this.host = new ExchangeHostDto(exchange.getHost());
         this.participants = new ArrayList<>();
         exchange.getParticipants().forEach(p -> {
-            this.participants.add(new UserDto(p));
+            this.participants.add(new ExchangeParticipantDto(p));
         });
     }
 
@@ -58,19 +58,19 @@ public class ExchangeDto {
         this.endDate = endDate;
     }
 
-    public UserDto getHost() {
+    public ExchangeHostDto getHost() {
         return host;
     }
 
-    public void setHost(UserDto host) {
+    public void setHost(ExchangeHostDto host) {
         this.host = host;
     }
 
-    public List<UserDto> getParticipants() {
+    public List<ExchangeParticipantDto> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<UserDto> participants) {
+    public void setParticipants(List<ExchangeParticipantDto> participants) {
         this.participants = participants;
     }
 }

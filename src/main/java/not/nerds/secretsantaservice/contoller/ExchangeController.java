@@ -13,10 +13,7 @@ import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/exchange")
@@ -70,14 +67,24 @@ public class ExchangeController {
         return exchangesToDtosJson(exchanges);
     }
 
+    @GetMapping("/participant/{participantId}")
+    public String getExchangesByParticipantId(@PathVariable int participantId) throws JsonProcessingException {
+        Iterable<Exchange> exchanges = this.exchangeRepository.findByParticipants_Id(participantId);
+        return exchangesToDtosJson(exchanges);
+    }
+
     @GetMapping
     public String getExchanges() throws JsonProcessingException {
         Iterable<Exchange> exchanges = this.exchangeRepository.findAll();
         return exchangesToDtosJson(exchanges);
     }
 
-    private Iterable<ExchangeDto> exchangesToDtos(Iterable<Exchange> exchanges) {
-        return exchangesToDtos(exchanges);
+    private List<ExchangeDto> exchangesToDtos(Iterable<Exchange> exchanges) {
+        List<ExchangeDto> results = new ArrayList<>();
+        exchanges.forEach(e -> {
+            results.add(new ExchangeDto(e));
+        });
+        return results;
     }
 
     private String toJson(Object object) throws JsonProcessingException {
