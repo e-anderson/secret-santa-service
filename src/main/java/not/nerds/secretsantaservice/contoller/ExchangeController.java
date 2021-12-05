@@ -1,5 +1,7 @@
 package not.nerds.secretsantaservice.contoller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import not.nerds.secretsantaservice.data.entity.Exchange;
 import not.nerds.secretsantaservice.data.entity.User;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/exchange")
@@ -33,6 +36,10 @@ public class ExchangeController {
                 exchange.setStartDate(request.getStartDate());
                 exchange.setEndDate(request.getEndDate());
                 exchange.setName(request.getName());
+
+                //get participant users from IDs
+                List<User> participants = StreamSupport.stream(userRepository.findAllById(request.getParticipants()).spliterator(),false).toList();
+                exchange.setParticipants(participants);
                 this.exchangeRepository.save(exchange);
             }
         } catch (Exception ex) {
@@ -55,11 +62,10 @@ public class ExchangeController {
     @GetMapping("/participant/{participantId}")
     public List<Exchange> getExchangesByParticipantId(@PathVariable int participantId) throws JsonProcessingException {
         return this.exchangeRepository.findByParticipants_Id(participantId).stream().toList();
-
     }
 
     @GetMapping
-    public Iterable<Exchange> getExchanges() throws JsonProcessingException {
+    public Iterable<Exchange> getExchanges() {
         return this.exchangeRepository.findAll();
     }
 }

@@ -1,7 +1,5 @@
 package not.nerds.secretsantaservice.request;
 
-import not.nerds.secretsantaservice.data.entity.User;
-
 import java.util.Date;
 
 public class ExchangePostRequest {
@@ -9,6 +7,7 @@ public class ExchangePostRequest {
     private Date startDate;
     private Date endDate;
     private int host;
+    private Iterable<Integer> participants;
 
     public String getName() {
         return name;
@@ -40,5 +39,13 @@ public class ExchangePostRequest {
 
     public void setHost(int host) {
         this.host = host;
+    }
+
+    public Iterable<Integer> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Iterable<Integer> participants) {
+        this.participants = participants;
     }
 }

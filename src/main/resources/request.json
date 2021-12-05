@@ -2,5 +2,6 @@
 		"name":"my exchange",
 		"startDate": 1639278742,
 		"endDate": 1640488342,
-		"host": 1
+		"host": 2,
+		"participants": [1,2]
 }
