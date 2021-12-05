@@ -1,15 +1,11 @@
 package not.nerds.secretsantaservice.contoller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import not.nerds.secretsantaservice.data.dto.ExchangeDto;
-import not.nerds.secretsantaservice.data.dto.UserDto;
 import not.nerds.secretsantaservice.data.entity.Exchange;
 import not.nerds.secretsantaservice.data.entity.User;
 import not.nerds.secretsantaservice.data.repository.ExchangeRepository;
 import not.nerds.secretsantaservice.data.repository.UserRepository;
 import not.nerds.secretsantaservice.request.ExchangePostRequest;
-import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,71 +43,23 @@ public class ExchangeController {
     }
 
     @GetMapping("/{id}")
-    public String getExchangeById(@PathVariable int id) throws JsonProcessingException {
-        try {
-            Optional<Exchange> exchange = this.exchangeRepository.findById(id);
-            if(exchange.isEmpty()) {
-                throw new Exception("Exchange not found, ID given was " + id);
-            } else {
-                return exchangeToDtoJson(exchange.get());
-            }
-        } catch(Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    public List<Exchange> getExchangeById(@PathVariable int id)  {
+        return this.exchangeRepository.findById(id).stream().toList();
     }
 
     @GetMapping("/host/{hostId}")
-    public String getExchangesByHostId(@PathVariable int hostId) throws JsonProcessingException {
-        Iterable<Exchange> exchanges = this.exchangeRepository.findByHost_Id(hostId);
-        return exchangesToDtosJson(exchanges);
+    public List<Exchange> getExchangesByHostId(@PathVariable int hostId) {
+        return this.exchangeRepository.findByHost_Id(hostId).stream().toList();
     }
 
     @GetMapping("/participant/{participantId}")
-    public String getExchangesByParticipantId(@PathVariable int participantId) throws JsonProcessingException {
-        Iterable<Exchange> exchanges = this.exchangeRepository.findByParticipants_Id(participantId);
-        return exchangesToDtosJson(exchanges);
+    public List<Exchange> getExchangesByParticipantId(@PathVariable int participantId) throws JsonProcessingException {
+        return this.exchangeRepository.findByParticipants_Id(participantId).stream().toList();
+
     }
 
     @GetMapping
-    public String getExchanges() throws JsonProcessingException {
-        Iterable<Exchange> exchanges = this.exchangeRepository.findAll();
-        return exchangesToDtosJson(exchanges);
-    }
-
-    private List<ExchangeDto> exchangesToDtos(Iterable<Exchange> exchanges) {
-        List<ExchangeDto> results = new ArrayList<>();
-        exchanges.forEach(e -> {
-            results.add(new ExchangeDto(e));
-        });
-        return results;
-    }
-
-    private String toJson(Object object) throws JsonProcessingException {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.writeValueAsString( object );
-        } catch(Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    private String exchangesToDtosJson(Iterable<Exchange> exchanges) throws JsonProcessingException {
-        try {
-            return toJson(exchangesToDtos(exchanges));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    private String exchangeToDtoJson(Exchange exchange) throws JsonProcessingException {
-        try {
-            return toJson(new ExchangeDto(exchange));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    public Iterable<Exchange> getExchanges() throws JsonProcessingException {
+        return this.exchangeRepository.findAll();
     }
 }

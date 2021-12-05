@@ -1,5 +1,10 @@
 package not.nerds.secretsantaservice.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -19,15 +24,19 @@ public class User {
     private Date birthDate;
 
     @ManyToMany(mappedBy = "participants")
+    @JsonIgnore
     private List<Exchange> exchangesParticipatedIn;
 
     @OneToMany(mappedBy = "host")
+    @JsonIgnore
     private List<Exchange> exchangesHosted;
 
     @OneToMany(mappedBy="gifter")
+    @JsonIgnore
     private List<Match> matchesAsGifter;
 
     @OneToMany(mappedBy="recipient")
+    @JsonIgnore
     private List<Match> matchesAsRecipient;
 
     public int getId() {

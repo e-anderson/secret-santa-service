@@ -1,5 +1,10 @@
 package not.nerds.secretsantaservice.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +31,8 @@ public class Exchange {
 
     @ManyToOne
     @JoinColumn(name="host_id")
+    //@JsonIgnoreProperties({"exchangesHosted", "exchangesParticipatedIn","matchesAsGifter","matchesAsRecipient"})
+    @JsonManagedReference
     private User host;
 
     @ManyToMany
@@ -34,6 +41,7 @@ public class Exchange {
             joinColumns=@JoinColumn(name="exchange_id"),
             inverseJoinColumns = @JoinColumn(name="participant_id")
     )
+    @JsonManagedReference
     private List<User> participants;
 
     @OneToMany(mappedBy = "exchange")

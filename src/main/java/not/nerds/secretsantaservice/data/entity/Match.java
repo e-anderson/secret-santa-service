@@ -1,5 +1,7 @@
 package not.nerds.secretsantaservice.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,14 +15,17 @@ public class Match {
 
     @ManyToOne
     @JoinColumn(name="exchange_id")
+    @JsonIncludeProperties("id")
     private Exchange exchange;
 
     @ManyToOne
     @JoinColumn(name="gifter_id")
+    @JsonIncludeProperties("id")
     private User gifter;
 
     @ManyToOne
     @JoinColumn(name="recipient_id")
+    @JsonIncludeProperties("id")
     private User recipient;
 
     @Column(name="is_fulfilled")
