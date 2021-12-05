@@ -17,8 +17,9 @@ public class User {
     @Column(name="email")
     private String email;
 
-    @Column(name="birth_date")
-    private Date birthDate;
+    @Column(name="auth0_id")
+    @JsonIgnore
+    private String auth0Id;
 
     @ManyToMany(mappedBy = "participants")
     @JsonIgnore
@@ -52,12 +53,12 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public String getAuth0Id() {
+        return auth0Id;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setAuth0Id(String auth0Id) {
+        this.auth0Id = auth0Id;
     }
 
     public List<Exchange> getExchangesParticipatedIn() {

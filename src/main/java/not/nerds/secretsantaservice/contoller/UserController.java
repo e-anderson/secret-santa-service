@@ -2,6 +2,7 @@ package not.nerds.secretsantaservice.contoller;
 
 import not.nerds.secretsantaservice.data.entity.User;
 import not.nerds.secretsantaservice.data.repository.UserRepository;
+import not.nerds.secretsantaservice.request.CreateUserPostRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,5 +21,19 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id) {
         return this.userRepository.findById(id).get();
+    }
+
+    @PostMapping
+    public boolean createUser(@RequestBody CreateUserPostRequest request) {
+        try {
+            User user = new User();
+            user.setEmail(request.getEmail());
+            user.setAuth0Id(request.getAuth0_id());
+            userRepository.save(user);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

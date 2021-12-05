@@ -1,5 +1,6 @@
 package not.nerds.secretsantaservice.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -18,12 +19,15 @@ public class Exchange {
     private String name;
 
     @Column(name="created_on")
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "UTC")
     private Date createdDate;
 
     @Column(name="start_date")
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "UTC")
     private Date startDate;
 
     @Column(name="end_date")
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "UTC")
     private Date endDate;
 
     @ManyToOne
@@ -42,8 +46,19 @@ public class Exchange {
     private List<User> participants;
 
     @OneToMany(mappedBy = "exchange")
-
     private List<Match> matches;
+
+    @Column(name="match_date")
+    @JsonFormat(pattern="yyyy-MM-dd@HH:mm", timezone = "UTC")
+    private Date matchDate;
+
+    public Date getMatchDate() {
+        return matchDate;
+    }
+
+    public void setMatchDate(Date matchDate) {
+        this.matchDate = matchDate;
+    }
 
     public int getId() {
         return id;

@@ -31,11 +31,11 @@ CREATE TABLE public.exchange (
     start_date timestamp without time zone,
     end_date timestamp without time zone,
     host_id integer,
-    enrollment_status character varying(50)
+    enrollment_status character varying(50),
+    match_date timestamp without time zone
 );
 
 
-ALTER TABLE public.exchange OWNER TO eanderson;
 
 --
 -- Name: exchange_has_participant; Type: TABLE; Schema: public; Owner: eanderson
@@ -47,7 +47,6 @@ CREATE TABLE public.exchange_has_participant (
 );
 
 
-ALTER TABLE public.exchange_has_participant OWNER TO eanderson;
 
 --
 -- Name: exchange_id_seq; Type: SEQUENCE; Schema: public; Owner: eanderson
@@ -62,7 +61,6 @@ CREATE SEQUENCE public.exchange_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.exchange_id_seq OWNER TO eanderson;
 
 --
 -- Name: exchange_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: eanderson
@@ -85,7 +83,6 @@ CREATE TABLE public.match (
 );
 
 
-ALTER TABLE public.match OWNER TO eanderson;
 
 --
 -- Name: match_id_seq; Type: SEQUENCE; Schema: public; Owner: eanderson
@@ -100,7 +97,6 @@ CREATE SEQUENCE public.match_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.match_id_seq OWNER TO eanderson;
 
 --
 -- Name: match_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: eanderson
@@ -116,11 +112,10 @@ ALTER SEQUENCE public.match_id_seq OWNED BY public.match.id;
 CREATE TABLE public."user" (
     id integer NOT NULL,
     email character varying(320) NOT NULL,
-    birth_date timestamp without time zone
+    auth0_id character varying
 );
 
 
-ALTER TABLE public."user" OWNER TO eanderson;
 
 --
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: eanderson
@@ -135,7 +130,6 @@ CREATE SEQUENCE public.user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_id_seq OWNER TO eanderson;
 
 --
 -- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: eanderson
@@ -169,7 +163,10 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 -- Data for Name: exchange; Type: TABLE DATA; Schema: public; Owner: eanderson
 --
 
-COPY public.exchange (id, name, created_on, start_date, end_date, host_id, enrollment_status) FROM stdin;
+COPY public.exchange (id, name, created_on, start_date, end_date, host_id, enrollment_status, match_date) FROM stdin;
+1	test exchange	2021-12-04 13:37:09.739592	2021-12-01 00:00:00	2021-12-31 00:00:00	1	open	\N
+2	my exchange	\N	1970-01-19 15:21:18.742	1970-01-19 15:41:28.342	1	\N	\N
+3	my exchange	2021-12-04 23:28:37.801	1970-01-19 15:21:18.742	1970-01-19 15:41:28.342	2	\N	\N
 \.
 
 
@@ -178,6 +175,10 @@ COPY public.exchange (id, name, created_on, start_date, end_date, host_id, enrol
 --
 
 COPY public.exchange_has_participant (exchange_id, participant_id) FROM stdin;
+1	1
+1	2
+3	1
+3	2
 \.
 
 
@@ -186,6 +187,8 @@ COPY public.exchange_has_participant (exchange_id, participant_id) FROM stdin;
 --
 
 COPY public.match (id, exchange_id, gifter_id, recipient_id, is_fulfilled, fulfillment_date) FROM stdin;
+1	1	1	2	f	\N
+2	1	2	1	f	\N
 \.
 
 
@@ -193,7 +196,9 @@ COPY public.match (id, exchange_id, gifter_id, recipient_id, is_fulfilled, fulfi
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: eanderson
 --
 
-COPY public."user" (id, email, birth_date) FROM stdin;
+COPY public."user" (id, email, auth0_id) FROM stdin;
+1	foo@bar.com	\N
+2	bar@foo.com	\N
 \.
 
 
@@ -201,21 +206,21 @@ COPY public."user" (id, email, birth_date) FROM stdin;
 -- Name: exchange_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eanderson
 --
 
-SELECT pg_catalog.setval('public.exchange_id_seq', 1, false);
+SELECT pg_catalog.setval('public.exchange_id_seq', 3, true);
 
 
 --
 -- Name: match_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eanderson
 --
 
-SELECT pg_catalog.setval('public.match_id_seq', 1, false);
+SELECT pg_catalog.setval('public.match_id_seq', 2, true);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eanderson
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_id_seq', 2, true);
 
 
 --

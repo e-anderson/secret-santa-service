@@ -6,6 +6,7 @@ public class ExchangePostRequest {
     private String name;
     private Date startDate;
     private Date endDate;
+    private Date matchDate;
     private int host;
     private Iterable<Integer> participants;
 
@@ -27,6 +28,14 @@ public class ExchangePostRequest {
 
     public Date getEndDate() {
         return endDate;
+    }
+
+    public Date getMatchDate() {
+        return matchDate;
+    }
+
+    public void setMatchDate(Date matchDate) {
+        this.matchDate = matchDate;
     }
 
     public void setEndDate(Date endDate) {
