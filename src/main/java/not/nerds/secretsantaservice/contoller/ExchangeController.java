@@ -50,8 +50,8 @@ public class ExchangeController {
     }
 
     @GetMapping("/{id}")
-    public List<Exchange> getExchangeById(@PathVariable int id)  {
-        return this.exchangeRepository.findById(id).stream().toList();
+    public Exchange getExchangeById(@PathVariable int id)  {
+        return this.exchangeRepository.findById(id).get();
     }
 
     @GetMapping("/host/{hostId}")
