@@ -1,6 +1,6 @@
 package not.nerds.secretsantaservice.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,17 +15,26 @@ public class Match {
 
     @ManyToOne
     @JoinColumn(name="exchange_id")
-    @JsonIncludeProperties("id")
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Exchange exchange;
 
     @ManyToOne
     @JoinColumn(name="gifter_id")
-    @JsonIncludeProperties("id")
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private User gifter;
 
     @ManyToOne
     @JoinColumn(name="recipient_id")
-    @JsonIncludeProperties("id")
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private User recipient;
 
     @Column(name="is_fulfilled")

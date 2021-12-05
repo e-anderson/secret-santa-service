@@ -45,6 +45,7 @@ public class Exchange {
     private List<User> participants;
 
     @OneToMany(mappedBy = "exchange")
+
     private List<Match> matches;
 
     public int getId() {

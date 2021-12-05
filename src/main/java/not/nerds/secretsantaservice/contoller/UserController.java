@@ -2,7 +2,6 @@ package not.nerds.secretsantaservice.contoller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import not.nerds.secretsantaservice.data.dto.UserDto;
 import not.nerds.secretsantaservice.data.entity.User;
 import not.nerds.secretsantaservice.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +19,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String getUsers() throws JsonProcessingException {
-        Iterable<User> users = this.userRepository.findAll();
-        List<UserDto> results = new ArrayList<UserDto>();
-
-        users.forEach(u -> {
-            UserDto result = new UserDto(u);
-            results.add(result);
-        });
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString( results );
-        return json;
+    public Iterable<User> getUsers() throws JsonProcessingException {
+        return this.userRepository.findAll();
     }
 }
