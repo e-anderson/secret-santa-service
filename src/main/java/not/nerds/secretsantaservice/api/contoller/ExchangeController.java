@@ -1,11 +1,11 @@
-package not.nerds.secretsantaservice.contoller;
+package not.nerds.secretsantaservice.api.contoller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import not.nerds.secretsantaservice.data.entity.Exchange;
 import not.nerds.secretsantaservice.data.entity.User;
 import not.nerds.secretsantaservice.data.repository.ExchangeRepository;
 import not.nerds.secretsantaservice.data.repository.UserRepository;
-import not.nerds.secretsantaservice.request.ExchangePostRequest;
+import not.nerds.secretsantaservice.api.request.ExchangePostRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

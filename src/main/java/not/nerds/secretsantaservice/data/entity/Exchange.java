@@ -32,7 +32,6 @@ public class Exchange {
 
     @ManyToOne
     @JoinColumn(name="host_id")
-    //@JsonIgnoreProperties({"exchangesHosted", "exchangesParticipatedIn","matchesAsGifter","matchesAsRecipient"})
     @JsonManagedReference
     private User host;
 

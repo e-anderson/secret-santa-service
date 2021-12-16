@@ -196,7 +196,7 @@ COPY public.match (id, exchange_id, gifter_id, recipient_id, is_fulfilled, fulfi
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: eanderson
 --
 
-COPY public."user" (id, email, auth0_id) FROM stdin;
+COPY public."user" (id, email, external_id) FROM stdin;
 1	foo@bar.com	\N
 2	bar@foo.com	\N
 \.

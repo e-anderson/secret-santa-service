@@ -1,4 +1,4 @@
-package not.nerds.secretsantaservice.request;
+package not.nerds.secretsantaservice.api.request;
 
 import java.util.Date;
 

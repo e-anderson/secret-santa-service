@@ -17,9 +17,18 @@ public class User {
     @Column(name="email")
     private String email;
 
-    @Column(name="auth0_id")
+    @Column(name="first_name")
+    private String firstName;
+
+    @Column(name="last_name")
+    private String lastName;
+
+    @Column(name="birthdate")
+    private Date birthDate;
+
+    @Column(name= "external_id")
     @JsonIgnore
-    private String auth0Id;
+    private String externalId;
 
     @ManyToMany(mappedBy = "participants")
     @JsonIgnore
@@ -53,12 +62,36 @@ public class User {
         this.email = email;
     }
 
-    public String getAuth0Id() {
-        return auth0Id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setAuth0Id(String auth0Id) {
-        this.auth0Id = auth0Id;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String auth0Id) {
+        this.externalId = auth0Id;
     }
 
     public List<Exchange> getExchangesParticipatedIn() {
