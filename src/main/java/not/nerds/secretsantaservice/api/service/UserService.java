@@ -1,4 +1,4 @@
-package not.nerds.secretsantaservice.api.manager;
+package not.nerds.secretsantaservice.api.service;
 
 import not.nerds.secretsantaservice.data.entity.User;
 import not.nerds.secretsantaservice.api.request.UserPostRequest;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserManager {
+public class UserService {
     @Autowired
     private UserRepository userRepository;
 

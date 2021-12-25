@@ -1,4 +1,4 @@
-package not.nerds.secretsantaservice.api.manager;
+package not.nerds.secretsantaservice.api.service;
 
 import not.nerds.secretsantaservice.data.entity.Exchange;
 import not.nerds.secretsantaservice.data.entity.User;
@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Component
-public class ExchangeManager {
+public class ExchangeService {
     @Autowired
     UserRepository userRepository;
 
