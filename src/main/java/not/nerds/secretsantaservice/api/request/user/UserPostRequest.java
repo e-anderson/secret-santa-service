@@ -1,6 +1,4 @@
-package not.nerds.secretsantaservice.api.request;
-
-
+package not.nerds.secretsantaservice.api.request.user;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;

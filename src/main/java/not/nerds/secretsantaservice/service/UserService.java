@@ -1,8 +1,8 @@
 package not.nerds.secretsantaservice.service;
 
-import not.nerds.secretsantaservice.api.request.UserPutRequest;
+import not.nerds.secretsantaservice.api.request.user.UserPutRequest;
 import not.nerds.secretsantaservice.data.entity.User;
-import not.nerds.secretsantaservice.api.request.UserPostRequest;
+import not.nerds.secretsantaservice.api.request.user.UserPostRequest;
 import not.nerds.secretsantaservice.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

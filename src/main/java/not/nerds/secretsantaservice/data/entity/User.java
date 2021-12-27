@@ -24,7 +24,7 @@ public class User {
     private String lastName;
 
     @Column(name="birthdate")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 
     @Column(name= "external_id")
