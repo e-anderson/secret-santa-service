@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 
-public class PostResponse<T> extends ResponseEntity {
+public class PostResponse<T> extends ResponseEntity<T> {
     public PostResponse(HttpStatus status) {
         super(status);
     }
@@ -13,15 +13,15 @@ public class PostResponse<T> extends ResponseEntity {
         super(body, status);
     }
 
-    public PostResponse(MultiValueMap headers, HttpStatus status) {
+    public PostResponse(MultiValueMap<String, String> headers, HttpStatus status) {
         super(headers, status);
     }
 
-    public PostResponse(Object body, MultiValueMap headers, HttpStatus status) {
+    public PostResponse(T body, MultiValueMap<String, String> headers, HttpStatus status) {
         super(body, headers, status);
     }
 
-    public PostResponse(Object body, MultiValueMap headers, int rawStatus) {
+    public PostResponse(T body, MultiValueMap<String, String> headers, int rawStatus) {
         super(body, headers, rawStatus);
     }
 }

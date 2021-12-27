@@ -9,7 +9,7 @@ public class GetResponse<T> extends ResponseEntity {
         super(status);
     }
 
-    public GetResponse(Object body, HttpStatus status) {
+    public GetResponse(T body, HttpStatus status) {
         super(body, status);
     }
 
