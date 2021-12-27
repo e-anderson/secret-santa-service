@@ -1,18 +1,12 @@
 package not.nerds.secretsantaservice.api.request;
 
-
-
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class UserPostRequest {
-    @NotNull(message="Email is a required field.")
+public class UserPutRequest {
     private String email;
     private String firstName;
     private String lastName;
     private Date birthDate;
-    @NotNull(message="ExternalId is a required field.")
-    private String externalId;
 
     public String getEmail() {
         return email;
@@ -46,11 +40,4 @@ public class UserPostRequest {
         this.birthDate = birthDate;
     }
 
-    public String getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
-    }
 }
