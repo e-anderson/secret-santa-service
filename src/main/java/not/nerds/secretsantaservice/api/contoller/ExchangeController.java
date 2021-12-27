@@ -49,12 +49,12 @@ public class ExchangeController {
     @PutMapping("/{id}/participant")
     public PutResponse<Exchange> addParticipantsToExchange(@PathVariable(value="id") int exchangeId,
                                                           @Valid @RequestBody ExchangeModifyParticipantsPutRequest request) throws Exception {
-        return new PutResponse<>(this.exchangeService.addParticipantsToExchange(exchangeId, request), HttpStatus.OK);
+        return new PutResponse<>(this.exchangeService.addOrRemoveParticipantsFromExchange(exchangeId, request, true), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}/participant")
     public PutResponse<Exchange> removeParticipantsFromExchange(@PathVariable(value="id") int exchangeId,
                                                            @Valid @RequestBody ExchangeModifyParticipantsPutRequest request) throws Exception {
-        return new PutResponse<>(this.exchangeService.removeParticipantsFromExchange(exchangeId, request), HttpStatus.OK);
+        return new PutResponse<>(this.exchangeService.addOrRemoveParticipantsFromExchange(exchangeId, request, false), HttpStatus.OK);
     }
 }

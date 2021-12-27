@@ -42,7 +42,7 @@ public class ExchangeService {
         }
     }
 
-    public Exchange addParticipantsToExchange(int exchangeId, ExchangeModifyParticipantsPutRequest request) throws Exception {
+    public Exchange addOrRemoveParticipantsFromExchange(int exchangeId, ExchangeModifyParticipantsPutRequest request, boolean isAddParticipantRequest) throws Exception {
         Optional<Exchange> exchangeOptional = this.exchangeRepository.findById(exchangeId);
         if (exchangeOptional.isEmpty()) {
             throw new Exception("Exchange ID " + exchangeId + " not found.");
@@ -50,43 +50,21 @@ public class ExchangeService {
             Exchange exchange = exchangeOptional.get();
             List<User> exchangeParticipants = exchange.getParticipants();
             List<Integer> requestedParticipants = request.getParticipants();
-            for (int i = 0; i < requestedParticipants.size(); i++) {
-                int participantId = requestedParticipants.get(i);
+            for (int participantId : requestedParticipants) {
                 Optional<User> participantOptional = this.userRepository.findById(participantId);
                 if (participantOptional.isEmpty()) {
                     throw new Exception("Participant user ID " + participantId + " not found.");
                 } else {
                     User user = participantOptional.get();
-                    // add the user if it isn't already in the list of participants
-                    // if it is, that's ok, don't add again
-                    if (!exchangeParticipants.contains(user)) {
-                        exchangeParticipants.add(user);
-                    }
-                }
-            }
-            exchange.setParticipants(exchangeParticipants);
-            return this.exchangeRepository.save(exchange);
-        }
-    }
-
-    public Exchange removeParticipantsFromExchange(int exchangeId, ExchangeModifyParticipantsPutRequest request) throws Exception {
-        Optional<Exchange> exchangeOptional = this.exchangeRepository.findById(exchangeId);
-        if (exchangeOptional.isEmpty()) {
-            throw new Exception("Exchange ID " + exchangeId + " not found.");
-        } else {
-            Exchange exchange = exchangeOptional.get();
-            List<User> exchangeParticipants = exchange.getParticipants();
-            List<Integer> requestedParticipants = request.getParticipants();
-            for (int i = 0; i < requestedParticipants.size(); i++) {
-                int participantId = requestedParticipants.get(i);
-                Optional<User> participantOptional = this.userRepository.findById(participantId);
-                if (participantOptional.isEmpty()) {
-                    throw new Exception("Participant user ID " + participantId + " not found.");
-                } else {
-                    User user = participantOptional.get();
-                    // delete the participant if they're in the list
-                    // if they aren't in the list, that's ok, don't do anything
-                    if (exchangeParticipants.contains(user)) {
+                    if (isAddParticipantRequest) {
+                        // add the user if it isn't already in the list of participants
+                        // if it is, that's ok, don't add again
+                        if (!exchangeParticipants.contains(user)) {
+                            exchangeParticipants.add(user);
+                        }
+                    } else {
+                        // delete the participant if they're in the list
+                        // if they aren't in the list, that's ok, don't do anything
                         exchangeParticipants.remove(user);
                     }
                 }
@@ -104,6 +82,7 @@ public class ExchangeService {
         return this.exchangeRepository.findByHost_Id(hostId);
     }
 
+    // TODO move to user service
     public Iterable<Exchange> findByParticipantId(int participantId) {
         return this.exchangeRepository.findByParticipants_Id(participantId);
     }
