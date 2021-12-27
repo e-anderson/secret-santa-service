@@ -2,11 +2,10 @@ package not.nerds.secretsantaservice.api.contoller;
 
 import not.nerds.secretsantaservice.api.response.GetResponse;
 import not.nerds.secretsantaservice.api.response.PostResponse;
-import not.nerds.secretsantaservice.api.service.ExchangeService;
+import not.nerds.secretsantaservice.service.ExchangeService;
 import not.nerds.secretsantaservice.data.entity.Exchange;
 import not.nerds.secretsantaservice.api.request.ExchangePostRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

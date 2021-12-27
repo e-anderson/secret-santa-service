@@ -1,4 +1,4 @@
-package not.nerds.secretsantaservice.api.service;
+package not.nerds.secretsantaservice.service;
 
 import not.nerds.secretsantaservice.data.entity.Exchange;
 import not.nerds.secretsantaservice.data.entity.User;

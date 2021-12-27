@@ -6,7 +6,7 @@ import not.nerds.secretsantaservice.api.response.PostResponse;
 import not.nerds.secretsantaservice.api.response.PutResponse;
 import not.nerds.secretsantaservice.data.entity.User;
 import not.nerds.secretsantaservice.api.request.UserPostRequest;
-import not.nerds.secretsantaservice.api.service.UserService;
+import not.nerds.secretsantaservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
