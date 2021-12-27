@@ -1,8 +1,8 @@
-package not.nerds.secretsantaservice.api.request;
+package not.nerds.secretsantaservice.api.request.exchange;
 
 import java.util.Date;
 
-public class ExchangePostRequest {
+public class CreateExchangePostRequest {
     private String name;
     private Date startDate;
     private Date endDate;

@@ -1,10 +1,11 @@
 package not.nerds.secretsantaservice.service;
 
+import not.nerds.secretsantaservice.api.request.exchange.ExchangeModifyParticipantsPutRequest;
 import not.nerds.secretsantaservice.data.entity.Exchange;
 import not.nerds.secretsantaservice.data.entity.User;
 import not.nerds.secretsantaservice.data.repository.ExchangeRepository;
 import not.nerds.secretsantaservice.data.repository.UserRepository;
-import not.nerds.secretsantaservice.api.request.ExchangePostRequest;
+import not.nerds.secretsantaservice.api.request.exchange.CreateExchangePostRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ public class ExchangeService {
     @Autowired
     ExchangeRepository exchangeRepository;
 
-    public Exchange createExchange(ExchangePostRequest request) throws Exception {
+    public Exchange createExchange(CreateExchangePostRequest request) throws Exception {
         Optional<User> host = userRepository.findById(request.getHost());
         if (host.isEmpty()) {
             throw new Exception("Host user ID " + request.getHost() + " not found.");
@@ -38,6 +39,60 @@ public class ExchangeService {
             exchange.setParticipants(participants);
             this.exchangeRepository.save(exchange);
             return exchange;
+        }
+    }
+
+    public Exchange addParticipantsToExchange(int exchangeId, ExchangeModifyParticipantsPutRequest request) throws Exception {
+        Optional<Exchange> exchangeOptional = this.exchangeRepository.findById(exchangeId);
+        if (exchangeOptional.isEmpty()) {
+            throw new Exception("Exchange ID " + exchangeId + " not found.");
+        } else {
+            Exchange exchange = exchangeOptional.get();
+            List<User> exchangeParticipants = exchange.getParticipants();
+            List<Integer> requestedParticipants = request.getParticipants();
+            for (int i = 0; i < requestedParticipants.size(); i++) {
+                int participantId = requestedParticipants.get(i);
+                Optional<User> participantOptional = this.userRepository.findById(participantId);
+                if (participantOptional.isEmpty()) {
+                    throw new Exception("Participant user ID " + participantId + " not found.");
+                } else {
+                    User user = participantOptional.get();
+                    // add the user if it isn't already in the list of participants
+                    // if it is, that's ok, don't add again
+                    if (!exchangeParticipants.contains(user)) {
+                        exchangeParticipants.add(user);
+                    }
+                }
+            }
+            exchange.setParticipants(exchangeParticipants);
+            return this.exchangeRepository.save(exchange);
+        }
+    }
+
+    public Exchange removeParticipantsFromExchange(int exchangeId, ExchangeModifyParticipantsPutRequest request) throws Exception {
+        Optional<Exchange> exchangeOptional = this.exchangeRepository.findById(exchangeId);
+        if (exchangeOptional.isEmpty()) {
+            throw new Exception("Exchange ID " + exchangeId + " not found.");
+        } else {
+            Exchange exchange = exchangeOptional.get();
+            List<User> exchangeParticipants = exchange.getParticipants();
+            List<Integer> requestedParticipants = request.getParticipants();
+            for (int i = 0; i < requestedParticipants.size(); i++) {
+                int participantId = requestedParticipants.get(i);
+                Optional<User> participantOptional = this.userRepository.findById(participantId);
+                if (participantOptional.isEmpty()) {
+                    throw new Exception("Participant user ID " + participantId + " not found.");
+                } else {
+                    User user = participantOptional.get();
+                    // delete the participant if they're in the list
+                    // if they aren't in the list, that's ok, don't do anything
+                    if (exchangeParticipants.contains(user)) {
+                        exchangeParticipants.remove(user);
+                    }
+                }
+            }
+            exchange.setParticipants(exchangeParticipants);
+            return this.exchangeRepository.save(exchange);
         }
     }
 

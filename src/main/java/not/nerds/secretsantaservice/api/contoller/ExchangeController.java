@@ -1,13 +1,17 @@
 package not.nerds.secretsantaservice.api.contoller;
 
+import not.nerds.secretsantaservice.api.request.exchange.ExchangeModifyParticipantsPutRequest;
 import not.nerds.secretsantaservice.api.response.GetResponse;
 import not.nerds.secretsantaservice.api.response.PostResponse;
+import not.nerds.secretsantaservice.api.response.PutResponse;
 import not.nerds.secretsantaservice.service.ExchangeService;
 import not.nerds.secretsantaservice.data.entity.Exchange;
-import not.nerds.secretsantaservice.api.request.ExchangePostRequest;
+import not.nerds.secretsantaservice.api.request.exchange.CreateExchangePostRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/exchange")
@@ -16,7 +20,7 @@ public class ExchangeController {
     private ExchangeService exchangeService;
 
     @PostMapping
-    public PostResponse<Exchange> createExchange(@RequestBody ExchangePostRequest request) throws Exception {
+    public PostResponse<Exchange> createExchange(@RequestBody CreateExchangePostRequest request) throws Exception {
             return new PostResponse<>(this.exchangeService.createExchange(request), HttpStatus.OK);
     }
 
@@ -36,8 +40,21 @@ public class ExchangeController {
         return new GetResponse<>(this.exchangeService.getExchangesByHostId(hostId), HttpStatus.OK);
     }
 
-    @GetMapping("/participant/{participantId}")
-    public GetResponse<Iterable<Exchange>> getExchangesByParticipantId(@PathVariable(value="participantId") int participantId) {
-        return new GetResponse<>(this.exchangeService.findByParticipantId(participantId), HttpStatus.OK);
+//    TODO move to user controller
+//    @GetMapping("/participant/{participantId}")
+//    public GetResponse<Iterable<Exchange>> getExchangesByParticipantId(@PathVariable(value="participantId") int participantId) {
+//        return new GetResponse<>(this.exchangeService.findByParticipantId(participantId), HttpStatus.OK);
+//    }
+
+    @PutMapping("/{id}/participant")
+    public PutResponse<Exchange> addParticipantsToExchange(@PathVariable(value="id") int exchangeId,
+                                                          @Valid @RequestBody ExchangeModifyParticipantsPutRequest request) throws Exception {
+        return new PutResponse<>(this.exchangeService.addParticipantsToExchange(exchangeId, request), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}/participant")
+    public PutResponse<Exchange> removeParticipantsFromExchange(@PathVariable(value="id") int exchangeId,
+                                                           @Valid @RequestBody ExchangeModifyParticipantsPutRequest request) throws Exception {
+        return new PutResponse<>(this.exchangeService.removeParticipantsFromExchange(exchangeId, request), HttpStatus.OK);
     }
 }

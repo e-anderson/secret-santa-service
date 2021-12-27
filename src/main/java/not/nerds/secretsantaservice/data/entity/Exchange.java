@@ -48,7 +48,7 @@ public class Exchange {
     private List<Match> matches;
 
     @Column(name="match_date")
-    @JsonFormat(pattern="yyyy-MM-dd@HH:mm", timezone = "UTC")
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "UTC")
     private Date matchDate;
 
     public Date getMatchDate() {
